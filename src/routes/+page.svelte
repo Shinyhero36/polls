@@ -1,6 +1,9 @@
 <script>
 	import Hero from '$lib/components/Hero.svelte';
 	import PollCard from '$lib/components/PollCard.svelte';
+
+	export let data;
+	let { ongoing, finished } = data;
 </script>
 
 <Hero />
@@ -9,8 +12,10 @@
 	<h3>Ongoing polls</h3>
 
 	<div class="polls-grid">
-		{#each [1, 2, 3, 4, 5, 6] as poll}
-			<PollCard />
+		{#each ongoing as poll}
+			<a href="/poll/{poll.id}">
+				<PollCard {poll} />
+			</a>
 		{/each}
 	</div>
 </section>
@@ -18,8 +23,10 @@
 <section>
 	<h3>Past polls</h3>
 	<div class="polls-grid">
-		{#each [1, 2, 3, 4, 5, 6] as poll}
-			<PollCard />
+		{#each finished as poll}
+			<a href="/polls/{poll.id}">
+				<PollCard {poll} />
+			</a>
 		{/each}
 	</div>
 </section>
@@ -41,6 +48,12 @@
 
 		@media screen and (max-width: 768px) {
 			grid-template-columns: repeat(1, minmax(0, 1fr));
+		}
+
+		// anchor surrounding the poll card
+		a {
+			text-decoration: none;
+			color: inherit;
 		}
 	}
 </style>
