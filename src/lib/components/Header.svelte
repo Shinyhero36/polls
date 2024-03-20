@@ -13,6 +13,8 @@
 		z-index: 10;
 		backdrop-filter: blur(8px);
 
+		border-bottom: 1px solid var(--border-neutral-subtle);
+
 		.container {
 			display: flex;
 			align-items: center;
