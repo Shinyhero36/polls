@@ -49,7 +49,6 @@
 		border-radius: var(--rounded-md);
 
 		font-family: inherit;
-		font-size: inherit;
 		font-weight: 500;
 
 		width: fit-content;
@@ -76,10 +75,14 @@
 		&.size-md {
 			height: var(--space-5xl);
 			padding: 0 var(--space-2xl);
+			font-size: var(--font-size-md);
+			line-height: var(--line-height-md);
 		}
 		&.size-lg {
 			height: var(--space-6xl);
 			padding: 0 var(--space-3xl);
+			font-size: var(--font-size-lg);
+			line-height: var(--line-height-lg);
 		}
 	}
 </style>
