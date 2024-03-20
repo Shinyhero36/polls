@@ -1,0 +1,84 @@
+:root {
+	--font-heading: 'Chubbo', sans-serif;
+	--font-body: 'Supreme', sans-serif;
+
+	// Typography
+	--font-size-sm: 0.875rem; // 14px
+	--line-height-sm: 1.25rem; // 20px
+	--font-size-md: 1rem; // 16px;
+	--line-height-md: 1.5rem; // 24px
+	--font-size-lg: 1.25rem; // 20px
+	--line-height-lg: 1.75rem; // 28px
+	--font-size-xl: 1.5rem; // 24px
+	--line-height-xl: 2rem; // 32px
+
+	// Spacing
+	--space-xxs: 0.125rem;
+	--space-xs: 0.25rem;
+	--space-sm: 0.375rem;
+	--space-md: 0.5rem;
+	--space-lg: 0.75rem;
+	--space-xl: 1rem;
+	--space-2xl: 1.25rem;
+	--space-3xl: 1.5rem;
+	--space-4xl: 2rem;
+	--space-5xl: 2.5rem;
+	--space-6xl: 3rem;
+	--space-7xl: 4rem;
+	--space-8xl: 5rem;
+	--space-9xl: 6rem;
+	--space-10xl: 8rem;
+	--space-11xl: 10rem;
+
+	// Radius
+	--rounded-xxs: 0.125rem;
+	--rounded-xs: 0.25rem;
+	--rounded-sm: 0.375rem;
+	--rounded-md: 0.5rem;
+	--rounded-lg: 0.625rem;
+	--rounded-xl: 0.75rem;
+	--rounded-2xl: 1rem;
+	--rounded-3xl: 1.25rem;
+	--rounded-4xl: 1.5rem;
+	--rounded-full: 9999px;
+
+	// Width
+	--width-xxs: 20rem;
+	--width-xs: 24rem;
+	--width-sm: 30rem;
+	--width-md: 35rem;
+	--width-lg: 40rem;
+	--width-xl: 48rem;
+	--width-2xl: 64rem;
+	--width-3xl: 80rem;
+	--width-4xl: 90rem;
+	--width-5xl: 100rem;
+	--width-6xl: 120rem;
+
+	// Container
+	--container-width: 80rem;
+
+	// Colors
+	--bg-app: var(--neutral-1);
+	--bg-app-subtle: var(--neutral-2);
+	--bg-selection: var(--primary-6);
+	--bg-surface: var(--neutral-3);
+	--bg-surface-hover: var(--neutral-4);
+	--bg-surface-solid: var(--neutral-9);
+	--bg-surface-solid-hover: var(--neutral-10);
+	--bg-surface-brand: var(--primary-3);
+	--bg-surface-brand-hover: var(--primary-4);
+	--bg-surface-brand-solid: var(--primary-9);
+	--bg-surface-brand-solid-hover: var(--primary-10);
+
+	--fg-app: var(--neutral-12);
+	--fg-app-subtle: var(--neutral-11);
+	--fg-selection: var(--primary-12);
+
+	--border-neutral: var(--neutral-7);
+	--border-neutral-subtle: var(--neutral-6);
+	--border-neutral-strong: var(--neutral-8);
+	--border-brand: var(--primary-7);
+	--border-brand-subtle: var(--primary-6);
+	--border-brand-strong: var(--primary-8);
+}
