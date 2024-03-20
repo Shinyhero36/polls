@@ -31,6 +31,7 @@
 				linear-gradient(83.21deg, var(--neutral-6), var(--primary-6));
 			mask-image: radial-gradient(rgba(0, 0, 0, 0.5), transparent 70%);
 			z-index: -1;
+			opacity: 0.5;
 		}
 	}
 
