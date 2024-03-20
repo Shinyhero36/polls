@@ -1,14 +1,21 @@
 <script lang="ts">
 	import CommentIcon from '$lib/components/Icons/CommentIcon.svelte';
 	import SomethingIcon from '$lib/components/Icons/SomethingIcon.svelte';
+	import type { Poll } from '$lib/types';
+
+	interface Props {
+		poll: Poll;
+	}
+
+	const { poll }: Props = $props();
 </script>
 
 <div class="poll-card">
 	<div class="author">
 		<img src="https://github.com/Shinyhero36.png" alt="S" />
-		<span>Me, myself & I</span>
+		<span>{poll.user.nickname}</span>
 	</div>
-	<h3>Is this a poll</h3>
+	<h3>{poll.question}</h3>
 	<footer>
 		<div class="stat">
 			<SomethingIcon />
