@@ -1,4 +1,6 @@
 <script>
+	import Button from '$lib/components/Button.svelte';
+	import EmptyState from '$lib/components/EmptyState.svelte';
 	import Hero from '$lib/components/Hero.svelte';
 	import PollCard from '$lib/components/PollCard.svelte';
 
@@ -11,24 +13,34 @@
 <section>
 	<h3>Ongoing polls</h3>
 
-	<div class="polls-grid">
-		{#each ongoing as poll}
-			<a href="/poll/{poll.id}">
-				<PollCard {poll} />
-			</a>
-		{/each}
-	</div>
+	{#if ongoing.length === 0}
+		<EmptyState message="No polls" />
+	{:else}
+		<div class="polls-grid">
+			{#each ongoing as poll}
+				<a href="/poll/{poll.id}">
+					<PollCard {poll} />
+				</a>
+			{/each}
+		</div>
+	{/if}
 </section>
 
 <section>
 	<h3>Past polls</h3>
-	<div class="polls-grid">
-		{#each finished as poll}
-			<a href="/polls/{poll.id}">
-				<PollCard {poll} />
-			</a>
-		{/each}
-	</div>
+	{#if finished.length === 0}
+		<EmptyState message="No polls" extra="Create a poll to get started">
+			<Button href="/create" variant="primary">Create a poll</Button>
+		</EmptyState>
+	{:else}
+		<div class="polls-grid">
+			{#each finished as poll}
+				<a href="/poll/{poll.id}">
+					<PollCard {poll} />
+				</a>
+			{/each}
+		</div>
+	{/if}
 </section>
 
 <style lang="scss">
