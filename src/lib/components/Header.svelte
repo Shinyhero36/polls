@@ -1,6 +1,6 @@
 <header>
 	<div class="container">
-		<span class="logo">Svote</span>
+		<a href="/" class="logo">Svote</a>
 
 		<div class="actions"></div>
 	</div>
@@ -22,6 +22,11 @@
 
 			padding-top: var(--space-xl);
 			padding-bottom: var(--space-xl);
+
+			a {
+				text-decoration: none;
+				color: var(--fg-app);
+			}
 
 			.logo {
 				font-weight: 500;
