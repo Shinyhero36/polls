@@ -75,7 +75,7 @@ export const votes = pgTable('votes', {
 	userId: text('user_id').references(() => users.id, { onDelete: 'cascade' }),
 	ipAddress: varchar('ip_address', {
 		length: 45
-	}).notNull()
+	})
 });
 
 export const usersRelations = relations(users, ({ many }) => ({
