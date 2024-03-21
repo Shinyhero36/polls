@@ -62,7 +62,8 @@ export const pollOptions = pgTable('poll_options', {
 		.notNull(),
 	option: varchar('option', {
 		length: 100
-	}).notNull()
+	}).notNull(),
+	votes: integer('votes').notNull().default(0)
 });
 
 export const usersRelations = relations(users, ({ many }) => ({
