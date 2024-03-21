@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
+	import Button from '$lib/components/ui/Button/Button.svelte';
 </script>
 
 <div class="hero-container">
@@ -7,7 +7,7 @@
 		<h1>Welcome to Svote</h1>
 		<p>Ask questions, get answers, and share your opinion with the world.</p>
 
-		<Button href="/new-poll" size="lg">Create a poll</Button>
+		<Button href="/new-poll" size="lg" inline>Create a poll</Button>
 	</div>
 </div>
 
