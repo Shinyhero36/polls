@@ -1,12 +1,4 @@
-import {
-	pgTable,
-	text,
-	varchar,
-	timestamp,
-	integer,
-	unique,
-	primaryKey
-} from 'drizzle-orm/pg-core';
+import { pgTable, text, varchar, timestamp, integer } from 'drizzle-orm/pg-core';
 import { relations, sql } from 'drizzle-orm';
 
 export const users = pgTable('users', {
@@ -73,27 +65,24 @@ export const pollOptions = pgTable('poll_options', {
 	}).notNull()
 });
 
-export const votes = pgTable(
-	'votes',
-	{
-		pollOptionId: text('poll_option_id')
-			.references(() => pollOptions.id, { onDelete: 'cascade' })
-			.notNull(),
-		ipAddress: text('ip_address').notNull()
-	},
-	(t) => ({
-		unq: unique('unq_poll_option_id_ip_address').on(t.pollOptionId, t.ipAddress),
-		pk: primaryKey({
-			name: 'pk_poll_option_id_ip_address',
-			columns: [t.pollOptionId, t.ipAddress]
-		})
-	})
-);
+export const votes = pgTable('votes', {
+	id: text('id')
+		.primaryKey()
+		.default(sql`gen_random_uuid()`),
+	pollOptionId: text('poll_option_id')
+		.references(() => pollOptions.id, { onDelete: 'cascade' })
+		.notNull(),
+	userId: text('user_id').references(() => users.id, { onDelete: 'cascade' }),
+	ipAddress: varchar('ip_address', {
+		length: 45
+	}).notNull()
+});
 
 export const usersRelations = relations(users, ({ many }) => ({
 	sessions: many(sessions),
 	passkeys: many(passkeys),
-	polls: many(polls)
+	polls: many(polls),
+	votes: many(votes)
 }));
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({
@@ -129,5 +118,9 @@ export const votesRelations = relations(votes, ({ one }) => ({
 	pollOption: one(pollOptions, {
 		fields: [votes.pollOptionId],
 		references: [pollOptions.id]
+	}),
+	user: one(users, {
+		fields: [votes.userId],
+		references: [users.id]
 	})
 }));
