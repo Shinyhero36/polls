@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Countdown from '$lib/components/Countdown.svelte';
-	import { fail } from '@sveltejs/kit';
+	import PollOptions from '$lib/components/PollOptions.svelte';
 
 	export let data;
 	const { poll } = data;
@@ -12,7 +12,9 @@
 		<Countdown until={poll.endsAt} />
 	</div>
 
-	<div class="poll"></div>
+	<div class="poll">
+		<PollOptions endsAt={poll.endsAt} options={poll.options} />
+	</div>
 {/if}
 
 <style lang="scss">
