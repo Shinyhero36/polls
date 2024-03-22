@@ -17,6 +17,9 @@ dependencies:
   sass:
     specifier: ^1.72.0
     version: 1.72.0
+  zod:
+    specifier: ^3.22.4
+    version: 3.22.4
 
 devDependencies:
   '@sveltejs/adapter-auto':
