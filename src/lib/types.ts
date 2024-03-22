@@ -9,6 +9,6 @@ export type SessionWithUser = typeof sessions.$inferSelect & {
 export type PollOption = typeof pollOptions.$inferSelect;
 
 export type Poll = typeof polls.$inferSelect & {
-	user: Pick<User, 'id' | 'nickname'>;
+	user: Pick<User, 'avatar' | 'username'>;
 	options: PollOption[];
 };

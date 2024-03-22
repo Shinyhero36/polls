@@ -9,8 +9,7 @@ export const load = async () => {
 			options: true,
 			user: {
 				columns: {
-					id: true,
-					nickname: true
+					username: true
 				}
 			}
 		}
@@ -23,8 +22,7 @@ export const load = async () => {
 			options: true,
 			user: {
 				columns: {
-					id: true,
-					nickname: true
+					username: true
 				}
 			}
 		}

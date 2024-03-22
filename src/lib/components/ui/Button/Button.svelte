@@ -1,6 +1,6 @@
 <script lang="ts">
 	interface Props {
-		variant?: 'primary' | 'secondary' | 'tertiary';
+		variant?: 'primary' | 'secondary' | 'tertiary' | 'discord';
 		size?: 'lg' | 'md';
 
 		inline?: boolean;
@@ -87,6 +87,15 @@
 
 			&:hover {
 				--_bg: var(--neutral-3);
+			}
+		}
+		&.discord {
+			--_text: var(--fg-discord);
+			--_bg: var(--bg-discord);
+			--_border: transparent;
+
+			&:hover {
+				--_bg: var(--bg-discord-hover);
 			}
 		}
 
