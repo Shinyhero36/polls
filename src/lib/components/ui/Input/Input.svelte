@@ -8,6 +8,8 @@
 		placeholder?: string;
 		value?: any;
 		error?: string;
+		min?: any;
+		max?: any;
 	}
 
 	let {
@@ -18,7 +20,9 @@
 		label = '',
 		placeholder = '',
 		value = '',
-		error
+		error,
+		min,
+		max
 	}: Props = $props();
 </script>
 
@@ -26,7 +30,7 @@
 	{#if label}
 		<label for={id}>{label}</label>
 	{/if}
-	<input {type} {id} {name} {placeholder} {required} bind:value />
+	<input {type} {id} {name} {placeholder} {required} bind:value {min} {max} />
 	{#if error}
 		<p class="error">{error}</p>
 	{/if}
