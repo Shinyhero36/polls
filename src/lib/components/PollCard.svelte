@@ -8,6 +8,7 @@
 	}
 
 	const { poll }: Props = $props();
+	const totalOfVotes = poll.options.reduce((acc, option) => acc + option.votes, 0);
 </script>
 
 <div class="poll-card">
@@ -19,7 +20,11 @@
 	<footer>
 		<div class="stat">
 			<SomethingIcon />
-			<span>11 answers</span>
+			{#if totalOfVotes > 0}
+				<span>{totalOfVotes} votes</span>
+			{:else}
+				<span>No votes yet</span>
+			{/if}
 		</div>
 		<div class="stat">
 			<CommentIcon />

@@ -1,19 +1,14 @@
-import { pgTable, text, varchar, timestamp, integer } from 'drizzle-orm/pg-core';
+import { pgTable, text, varchar, timestamp, integer, primaryKey } from 'drizzle-orm/pg-core';
 import { relations, sql } from 'drizzle-orm';
 
 export const users = pgTable('users', {
-	id: text('id')
-		.primaryKey()
-		.default(sql`gen_random_uuid()`),
-	nickname: varchar('nickname', {
+	id: text('id').primaryKey(),
+	username: varchar('nickname', {
 		length: 50
 	}).notNull(),
-	email: text('email').unique().notNull(),
-	password: varchar('password', {
-		length: 100
-	}).notNull(),
-	challenge: text('challenge'),
-	challengeExpiresAt: timestamp('challenge_expires_at')
+	avatar: text('avatar').notNull(),
+	refreshToken: text('refresh_token').notNull(),
+	accessToken: text('access_token').notNull()
 });
 
 export const sessions = pgTable('sessions', {
@@ -24,19 +19,6 @@ export const sessions = pgTable('sessions', {
 		.references(() => users.id, { onDelete: 'cascade' })
 		.notNull(),
 	expiresAt: timestamp('expires_at').notNull()
-});
-
-export const passkeys = pgTable('passkeys', {
-	id: text('id').primaryKey(),
-	publicKey: text('public_key').notNull(),
-	userId: text('user_id')
-		.references(() => users.id, { onDelete: 'cascade' })
-		.notNull(),
-	name: varchar('name', {
-		length: 50
-	}).notNull(),
-	counter: integer('counter').notNull(),
-	createdAt: timestamp('created_at').notNull().defaultNow()
 });
 
 export const polls = pgTable('polls', {
@@ -66,22 +48,33 @@ export const pollOptions = pgTable('poll_options', {
 	votes: integer('votes').notNull().default(0)
 });
 
+export const votes = pgTable(
+	'votes',
+	{
+		userId: text('user_id')
+			.references(() => users.id, { onDelete: 'cascade' })
+			.notNull(),
+		pollOptionId: text('poll_option_id')
+			.references(() => pollOptions.id, { onDelete: 'cascade' })
+			.notNull()
+	},
+	(t) => ({
+		pk: primaryKey({
+			name: 'votes_pk',
+			columns: [t.userId, t.pollOptionId]
+		})
+	})
+);
+
 export const usersRelations = relations(users, ({ many }) => ({
+	polls: many(polls),
 	sessions: many(sessions),
-	passkeys: many(passkeys),
-	polls: many(polls)
+	votes: many(votes)
 }));
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({
 	user: one(users, {
 		fields: [sessions.userId],
-		references: [users.id]
-	})
-}));
-
-export const passkeysRelations = relations(passkeys, ({ one }) => ({
-	user: one(users, {
-		fields: [passkeys.userId],
 		references: [users.id]
 	})
 }));
@@ -94,9 +87,10 @@ export const pollsRelations = relations(polls, ({ one, many }) => ({
 	options: many(pollOptions)
 }));
 
-export const pollOptionsRelations = relations(pollOptions, ({ one }) => ({
+export const pollOptionsRelations = relations(pollOptions, ({ one, many }) => ({
 	poll: one(polls, {
 		fields: [pollOptions.pollId],
 		references: [polls.id]
-	})
+	}),
+	votes: many(votes)
 }));
