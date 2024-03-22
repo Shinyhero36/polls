@@ -33,7 +33,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"argon2": "^0.40.1",
 		"drizzle-orm": "^0.30.4",
 		"drizzle-zod": "^0.5.1",
 		"postgres": "^3.4.3",
