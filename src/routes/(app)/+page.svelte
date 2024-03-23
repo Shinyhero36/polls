@@ -1,11 +1,16 @@
-<script>
+<script lang="ts">
 	import Button from '$lib/components/ui/Button/Button.svelte';
 	import EmptyState from '$lib/components/EmptyState.svelte';
 	import Hero from '$lib/components/Hero.svelte';
 	import PollCard from '$lib/components/PollCard.svelte';
+	import type { PollOptionWithVotes } from '$lib/types';
 
 	export let data;
 	let { ongoing, finished } = data;
+
+	const countVotes = (options: PollOptionWithVotes[]) => {
+		return options.reduce((acc, option) => acc + option.votes.length, 0);
+	};
 </script>
 
 <Hero />
@@ -19,7 +24,7 @@
 		<div class="polls-grid">
 			{#each ongoing as poll}
 				<a href="/poll/{poll.id}">
-					<PollCard {poll} />
+					<PollCard {poll} totalOfVotes={countVotes(poll.options)} />
 				</a>
 			{/each}
 		</div>
@@ -36,7 +41,7 @@
 		<div class="polls-grid">
 			{#each finished as poll}
 				<a href="/poll/{poll.id}">
-					<PollCard {poll} />
+					<PollCard {poll} totalOfVotes={countVotes(poll.options)} />
 				</a>
 			{/each}
 		</div>

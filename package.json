@@ -36,6 +36,8 @@
 		"drizzle-orm": "^0.30.4",
 		"drizzle-zod": "^0.5.1",
 		"postgres": "^3.4.3",
-		"sass": "^1.72.0"
+		"sass": "^1.72.0",
+		"svelte-sonner": "^0.3.19",
+		"zod": "^3.22.4"
 	}
 }

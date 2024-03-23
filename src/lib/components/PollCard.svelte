@@ -5,16 +5,16 @@
 
 	interface Props {
 		poll: Poll;
+		totalOfVotes: number;
 	}
 
-	const { poll }: Props = $props();
-	const totalOfVotes = poll.options.reduce((acc, option) => acc + option.votes, 0);
+	const { poll, totalOfVotes }: Props = $props();
 </script>
 
 <div class="poll-card">
 	<div class="author">
 		<img src="https://github.com/Shinyhero36.png" alt="S" />
-		<span>{poll.user.nickname}</span>
+		<span>{poll.user.username}</span>
 	</div>
 	<h3>{poll.question}</h3>
 	<footer>

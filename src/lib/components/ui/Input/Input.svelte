@@ -7,7 +7,11 @@
 		label?: string;
 		placeholder?: string;
 		value?: any;
+		hint?: string;
 		error?: string;
+		min?: any;
+		max?: any;
+		textarea?: boolean;
 	}
 
 	let {
@@ -18,7 +22,11 @@
 		label = '',
 		placeholder = '',
 		value = '',
-		error
+		hint = '',
+		error,
+		min,
+		max,
+		textarea = false
 	}: Props = $props();
 </script>
 
@@ -26,8 +34,14 @@
 	{#if label}
 		<label for={id}>{label}</label>
 	{/if}
-	<input {type} {id} {name} {placeholder} {required} bind:value />
-	{#if error}
+	{#if !textarea}
+		<input {type} {id} {name} {placeholder} {required} bind:value {min} {max} />
+	{:else}
+		<textarea {id} {name} {placeholder} {required} bind:value />
+	{/if}
+	{#if hint && !error}
+		<p class="hint">{hint}</p>
+	{:else if error}
 		<p class="error">{error}</p>
 	{/if}
 </div>
@@ -39,8 +53,10 @@
 
 		label {
 			margin-bottom: var(--space-md);
+			font-weight: 500;
 		}
-		input {
+		input,
+		textarea {
 			border: 2px solid var(--neutral-7);
 			border-radius: var(--rounded-md);
 			padding: 0 var(--space-lg);
@@ -51,10 +67,23 @@
 				font-size: var(--neutral-7);
 			}
 		}
+
+		textarea {
+			height: var(--space-9xl);
+			resize: vertical;
+			padding: var(--space-lg);
+		}
+
+		p.hint,
 		p.error {
-			font-size: var(--text-sm);
-			line-height: var(--text-sm-line-height);
+			margin-top: var(--space-sm);
+			font-size: var(--font-size-sm);
+			line-height: var(--line-height-sm);
 			font-weight: 300;
+		}
+
+		p.error {
+			color: red; // TODO: Add error colors
 		}
 	}
 </style>
