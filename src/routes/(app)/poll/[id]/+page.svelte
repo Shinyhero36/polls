@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Countdown from '$lib/components/Countdown.svelte';
 	import PollOptions from '$lib/components/PollOptions.svelte';
-	import type { PollOption } from '$lib/types';
+	import type { PollOption, PollOptionWithVotes } from '$lib/types';
 	import { page } from '$app/stores';
 	import type { PageServerData } from './$types';
 
@@ -21,7 +21,7 @@
 		if (!session) return; // TODO: Should redirect to login page instead
 
 		// Make sure the user hasn't already voted
-		if (poll.options.some((o) => o.votes.some((v) => v.userId === session?.userId))) {
+		if (session && hasAlreadyVoted(poll.options, session.userId)) {
 			console.error('User has already voted');
 			return;
 		}
@@ -53,6 +53,15 @@
 			})
 		};
 	};
+
+	const hasAlreadyVoted = (options: PollOptionWithVotes[], userId: string) => {
+		return options.some((option) => option.votes.some((vote) => vote.userId === userId));
+	};
+
+	const findForWhatOptionUserVoted = (options: PollOptionWithVotes[], userId: string) => {
+		const option = options.find((option) => option.votes.some((vote) => vote.userId === userId));
+		return option?.option;
+	};
 </script>
 
 {#if poll}
@@ -67,6 +76,15 @@
 	<div class="poll">
 		<PollOptions bind:endsAt={poll.endsAt} bind:options={poll.options} onVote={handleVote} />
 	</div>
+
+	<!-- Check if the usear has already voted -->
+	{#if session && hasAlreadyVoted(poll.options, session?.userId)}
+		<p class="already-voted">
+			You voted for <span class="vote">
+				{findForWhatOptionUserVoted(poll.options, session.userId)}
+			</span>
+		</p>
+	{/if}
 {/if}
 
 <style lang="scss">
@@ -80,6 +98,15 @@
 		font-size: var(--font-size-lg);
 		line-height: var(--line-height-lg);
 		color: var(--fg-app-subtle);
+	}
+
+	.already-voted {
+		margin-top: var(--space-4xl);
+		color: var(--fg-app-subtle);
+
+		.vote {
+			font-weight: 500;
+		}
 	}
 
 	.time-info {
