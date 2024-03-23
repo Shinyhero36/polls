@@ -3,6 +3,7 @@
 	import Separator from '$lib/components/Separator.svelte';
 	import type { Message } from '$lib/types';
 	import { enhance } from '$app/forms';
+	import autoAnimate from '@formkit/auto-animate';
 
 	interface Props {
 		pollId: string;
@@ -105,7 +106,7 @@
 
 	<Separator />
 
-	<div class="messages">
+	<div class="messages" use:autoAnimate>
 		{#each messages as msg}
 			{@render MessageCard(msg)}
 		{/each}
