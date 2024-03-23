@@ -1,5 +1,5 @@
 <script lang="ts">
-	import CommentIcon from '$lib/components/Icons/CommentIcon.svelte';
+	import ClockIcon from '$lib/components/Icons/ClockIcon.svelte';
 	import SomethingIcon from '$lib/components/Icons/SomethingIcon.svelte';
 	import type { Poll } from '$lib/types';
 
@@ -24,14 +24,14 @@
 		<div class="stat">
 			<SomethingIcon />
 			{#if totalOfVotes > 0}
-				<span>{totalOfVotes} votes</span>
+				<span>{totalOfVotes} vote{totalOfVotes > 1 ? 's' : ''}</span>
 			{:else}
 				<span>No votes yet</span>
 			{/if}
 		</div>
 		<div class="stat">
-			<CommentIcon />
-			<span>138.6k messages</span>
+			<ClockIcon />
+			<span>Ends on {poll.endsAt.toDateString()}</span>
 		</div>
 	</footer>
 </div>

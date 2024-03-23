@@ -44,3 +44,14 @@ export const saveTokens = async ({
 		})
 		.where(eq(users.id, userId));
 };
+
+export const getPublicInfoAboutAccount = async (userId: string) => {
+	return await db.query.users.findFirst({
+		where: ({ id }, { eq }) => eq(id, userId),
+		columns: {
+			id: true,
+			avatar: true,
+			username: true
+		}
+	});
+};
