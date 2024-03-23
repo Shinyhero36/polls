@@ -15,7 +15,7 @@
 
 <Hero />
 
-<section>
+<section aria-label="Ongoing polls">
 	<h3>Ongoing polls</h3>
 
 	{#if ongoing.length === 0}
@@ -31,7 +31,7 @@
 	{/if}
 </section>
 
-<section>
+<section aria-label="Past polls">
 	<h3>Past polls</h3>
 	{#if finished.length === 0}
 		<EmptyState message="No polls" extra="Create a poll to get started">

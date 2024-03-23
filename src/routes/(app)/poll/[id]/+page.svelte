@@ -5,6 +5,7 @@
 	import { page } from '$app/stores';
 	import type { PageServerData } from './$types';
 	import { toast } from 'svelte-sonner';
+	import Meta from '$lib/components/Meta.svelte';
 
 	let {
 		poll,
@@ -74,6 +75,8 @@
 		return option?.option;
 	};
 </script>
+
+<Meta title={poll?.question} description={poll?.description} />
 
 {#if poll}
 	<h1>{poll.question}</h1>
