@@ -62,9 +62,10 @@
 			padding: 0 var(--space-lg);
 			font-size: inherit;
 			height: 40px;
+			background-color: var(--neutral-3);
 
-			::placeholder {
-				font-size: var(--neutral-7);
+			&::placeholder {
+				color: var(--fg-app-subtle);
 			}
 		}
 
