@@ -1,9 +1,58 @@
 <script lang="ts">
 	import Countdown from '$lib/components/Countdown.svelte';
 	import PollOptions from '$lib/components/PollOptions.svelte';
+	import type { PollOption } from '$lib/types';
+	import { page } from '$app/stores';
+	import type { PageServerData } from './$types';
 
-	export let data;
-	const { poll } = data;
+	let {
+		poll,
+		session
+	}: {
+		poll: PageServerData['poll'];
+		session: PageServerData['session'];
+	} = $state({
+		poll: $page.data.poll,
+		session: $page.data.session
+	});
+
+	const handleVote = async (option: PollOption) => {
+		if (!poll) return;
+		if (!session) return; // TODO: Should redirect to login page instead
+
+		// Make sure the user hasn't already voted
+		if (poll.options.some((o) => o.votes.some((v) => v.userId === session?.userId))) {
+			console.error('User has already voted');
+			return;
+		}
+
+		// Send vote to the server
+		const form = new FormData();
+		form.append('optionId', option.id);
+		const res = await fetch(`/poll/${poll?.id}?/vote`, {
+			method: 'POST',
+			body: form
+		});
+
+		if (!res.ok) {
+			console.error('Failed to vote');
+			return;
+		}
+
+		// Update the poll with the new vote count
+		poll = {
+			...poll,
+			options: poll.options.map((o) => {
+				if (o.id === option.id && session) {
+					return {
+						...o,
+						votes: [...o.votes, { userId: session.userId, pollOptionId: option.id }]
+					};
+				}
+				return o;
+			})
+		};
+	};
 </script>
 
 {#if poll}
@@ -16,7 +65,7 @@
 	</div>
 
 	<div class="poll">
-		<PollOptions endsAt={poll.endsAt} options={poll.options} />
+		<PollOptions bind:endsAt={poll.endsAt} bind:options={poll.options} onVote={handleVote} />
 	</div>
 {/if}
 

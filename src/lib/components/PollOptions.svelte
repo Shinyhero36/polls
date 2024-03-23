@@ -1,40 +1,59 @@
 <script lang="ts">
-	import type { PollOption } from '$lib/types';
+	import type { PollOption, PollOptionWithVotes } from '$lib/types';
 
 	interface Props {
 		endsAt: Date;
-		options: PollOption[];
+		options: PollOptionWithVotes[];
+
+		onVote?: (option: PollOption) => void;
 	}
 
-	const { endsAt, options }: Props = $props();
+	const { endsAt, options, onVote }: Props = $props();
 
-	const maxVotes = Math.max(...options.map((option) => option.votes));
+	let maxVotes = $state(0);
 	const isOver = endsAt < new Date();
 
-	const computeOptionWidth = (votes: number) => {
-		if (maxVotes === 0) return '0%';
-		const percentage = (votes / maxVotes) * 100;
-		return `${percentage}%`;
+	// Update maxVotes when options change
+	$effect(() => {
+		maxVotes = Math.max(...options.map((o) => o.votes.length));
+	});
+
+	const handlePollOptionClick = (option: PollOption) => {
+		if (isOver) return;
+		if (onVote) onVote(option);
 	};
 </script>
 
 <div class="poll-options">
 	{#each options as option}
-		<div class="poll-option" class:isOver class:maxVotes={maxVotes === option.votes}>
+		<button
+			class="poll-option"
+			class:isOver
+			class:maxVotes={maxVotes === option.votes.length}
+			on:click={() => handlePollOptionClick(option)}
+		>
 			<p>
 				{option.option}
 			</p>
 			<div class="poll-stat">
-				<div class="poll-bar" style="width: {computeOptionWidth(option.votes)}" />
-				<span>{option.votes}</span>
+				<div
+					class="poll-bar"
+					style="width: {maxVotes === 0 ? 0 : (option.votes.length / maxVotes) * 100}%"
+				/>
+				<span>{option.votes.length}</span>
 			</div>
-		</div>
+		</button>
 	{/each}
 </div>
 
 <style lang="scss">
 	.poll-options {
 		.poll-option {
+			// Unset button styles
+			background-color: transparent;
+			border: 0;
+
+			width: 100%;
 			display: flex;
 			align-items: center;
 
@@ -74,6 +93,8 @@
 					border: 2px solid var(--border-brand-subtle);
 					border-top-right-radius: var(--rounded-xl);
 					border-bottom-right-radius: var(--rounded-xl);
+
+					transition: width 400ms ease-in-out;
 				}
 			}
 

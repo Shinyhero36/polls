@@ -1,4 +1,4 @@
-import { pgTable, text, varchar, timestamp, integer, primaryKey } from 'drizzle-orm/pg-core';
+import { pgTable, text, varchar, timestamp, primaryKey } from 'drizzle-orm/pg-core';
 import { relations, sql } from 'drizzle-orm';
 
 export const users = pgTable('users', {
@@ -47,8 +47,7 @@ export const pollOptions = pgTable('poll_options', {
 		.notNull(),
 	option: varchar('option', {
 		length: 100
-	}).notNull(),
-	votes: integer('votes').notNull().default(0)
+	}).notNull()
 });
 
 export const votes = pgTable(
@@ -96,4 +95,15 @@ export const pollOptionsRelations = relations(pollOptions, ({ one, many }) => ({
 		references: [polls.id]
 	}),
 	votes: many(votes)
+}));
+
+export const votesRelations = relations(votes, ({ one }) => ({
+	user: one(users, {
+		fields: [votes.userId],
+		references: [users.id]
+	}),
+	option: one(pollOptions, {
+		fields: [votes.pollOptionId],
+		references: [pollOptions.id]
+	})
 }));

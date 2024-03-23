@@ -1,32 +1,13 @@
-import { db } from '$lib/server/db';
+import {
+	getFinishedPollsWithVotesAndCreatorInfo,
+	getOngoingPollsWithVotesAndCreatorInfo
+} from '$lib/helpers/poll';
 
 export const load = async () => {
-	const now = new Date();
-	// Get ongoing polls
-	const ongoing = await db.query.polls.findMany({
-		where: ({ endsAt }, { gt }) => gt(endsAt, now),
-		with: {
-			options: true,
-			user: {
-				columns: {
-					username: true
-				}
-			}
-		}
-	});
+	const ongoing = await getOngoingPollsWithVotesAndCreatorInfo();
 
 	// Get finished polls
-	const finished = await db.query.polls.findMany({
-		where: ({ endsAt }, { lte }) => lte(endsAt, now),
-		with: {
-			options: true,
-			user: {
-				columns: {
-					username: true
-				}
-			}
-		}
-	});
+	const finished = await getFinishedPollsWithVotesAndCreatorInfo();
 
 	return {
 		ongoing,

@@ -29,7 +29,6 @@ export const actions = {
 		});
 		if (!poll.success) {
 			const errors = poll.error.flatten().fieldErrors;
-			console.log('ERRORS:', errors);
 			return fail(400, {
 				question: errors.question ? errors.question[0] : undefined,
 				description: errors.description ? errors.description[0] : undefined,
