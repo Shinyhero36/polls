@@ -2,7 +2,7 @@
 	import { enhance } from '$app/forms';
 	import Button from '$lib/components/ui/Button/Button.svelte';
 	import Input from '$lib/components/ui/Input/Input.svelte';
-	import SpinnerIcon from '$lib/components/icons/SpinnerIcon.svelte';
+	import SpinnerIcon from '$lib/components/Icons/SpinnerIcon.svelte';
 	import { toast } from 'svelte-sonner';
 
 	const now = new Date().toISOString().split(':').slice(0, 2).join(':');
