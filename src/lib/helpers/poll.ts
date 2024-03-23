@@ -14,11 +14,13 @@ export const getPoll = async (pollId: string) => {
 export const createPoll = async ({
 	userId,
 	question,
+	description,
 	options,
 	endsAt
 }: {
 	userId: string;
 	question: string;
+	description?: string;
 	options: string[];
 	endsAt: Date;
 }) => {
@@ -26,6 +28,7 @@ export const createPoll = async ({
 		.insert(polls)
 		.values({
 			question,
+			description,
 			endsAt,
 			userId
 		})
@@ -43,6 +46,7 @@ export const createPoll = async ({
 
 export const validatePoll = z.object({
 	question: z.string().min(1).max(255),
+	description: z.string().min(1).max(500).optional(),
 	options: z.array(z.string().min(1).max(255)).min(2).max(5),
 	ends_at: z.coerce.date().refine((date) => new Date(date))
 });

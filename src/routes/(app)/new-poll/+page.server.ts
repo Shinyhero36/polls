@@ -14,6 +14,7 @@ export const actions = {
 		// Validate form data
 		const formData = await request.formData();
 		const question = formData.get('question')?.toString();
+		const description = formData.get('description')?.toString();
 		const ends_at = formData.get('ends_at')?.toString();
 		const options = formData
 			.getAll('options')
@@ -22,6 +23,7 @@ export const actions = {
 
 		const poll = validatePoll.safeParse({
 			question,
+			description,
 			ends_at,
 			options
 		});
@@ -30,6 +32,7 @@ export const actions = {
 			console.log('ERRORS:', errors);
 			return fail(400, {
 				question: errors.question ? errors.question[0] : undefined,
+				description: errors.description ? errors.description[0] : undefined,
 				options: errors.options ? errors.options : undefined
 			});
 		}
@@ -38,6 +41,7 @@ export const actions = {
 			userId: session.userId,
 			endsAt: poll.data.ends_at,
 			question: poll.data.question,
+			description: poll.data.description,
 			options: poll.data.options
 		});
 

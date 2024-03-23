@@ -28,6 +28,9 @@ export const polls = pgTable('polls', {
 	question: varchar('question', {
 		length: 100
 	}).notNull(),
+	description: varchar('description', {
+		length: 500
+	}),
 	userId: text('user_id')
 		.references(() => users.id, { onDelete: 'cascade' })
 		.notNull(),

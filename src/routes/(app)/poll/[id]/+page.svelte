@@ -8,6 +8,9 @@
 
 {#if poll}
 	<h1>{poll.question}</h1>
+	{#if poll.description}
+		<p>{poll.description}</p>
+	{/if}
 	<div class="time-info">
 		<Countdown until={poll.endsAt} />
 	</div>
@@ -21,6 +24,13 @@
 	h1 {
 		margin-top: var(--space-6xl);
 		font-size: var(--font-size-4xl);
+	}
+
+	p {
+		margin-top: var(--space-md);
+		font-size: var(--font-size-lg);
+		line-height: var(--line-height-lg);
+		color: var(--fg-app-subtle);
 	}
 
 	.time-info {
