@@ -11,7 +11,7 @@
 	const { poll, totalOfVotes }: Props = $props();
 </script>
 
-<div class="poll-card">
+<div class="poll-card" aria-label="{poll.question} by {poll.user.username}">
 	<div class="author">
 		<img src="https://github.com/Shinyhero36.png" alt="S" />
 		<span>{poll.user.username}</span>
