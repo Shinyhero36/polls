@@ -7,6 +7,7 @@
 	import { toast } from 'svelte-sonner';
 	import Meta from '$lib/components/Meta.svelte';
 	import Chat from '$lib/components/Chat.svelte';
+	import { goto } from '$app/navigation';
 
 	let {
 		poll,
@@ -27,7 +28,10 @@
 
 		const saveVote = async () => {
 			if (!poll) throw new Error('Poll not found');
-			if (!session) throw new Error('Session not found'); // TODO: Should redirect to login page instead
+			if (!session) {
+				await goto('/login');
+				throw new Error('You need to be logged in to vote');
+			}
 
 			// Make sure the user hasn't already voted
 			if (session && hasAlreadyVoted(poll.options, session.userId)) {
