@@ -68,10 +68,27 @@ export const votes = pgTable(
 	})
 );
 
+export const messages = pgTable('messages', {
+	id: text('id')
+		.primaryKey()
+		.default(sql`gen_random_uuid()`),
+	userId: text('user_id')
+		.references(() => users.id, { onDelete: 'cascade' })
+		.notNull(),
+	pollId: text('poll_id')
+		.references(() => polls.id, { onDelete: 'cascade' })
+		.notNull(),
+	message: varchar('message', {
+		length: 500
+	}).notNull(),
+	createdAt: timestamp('created_at').notNull().defaultNow()
+});
+
 export const usersRelations = relations(users, ({ many }) => ({
 	polls: many(polls),
 	sessions: many(sessions),
-	votes: many(votes)
+	votes: many(votes),
+	messages: many(messages)
 }));
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({
@@ -86,7 +103,8 @@ export const pollsRelations = relations(polls, ({ one, many }) => ({
 		fields: [polls.userId],
 		references: [users.id]
 	}),
-	options: many(pollOptions)
+	options: many(pollOptions),
+	messages: many(messages)
 }));
 
 export const pollOptionsRelations = relations(pollOptions, ({ one, many }) => ({
@@ -105,5 +123,16 @@ export const votesRelations = relations(votes, ({ one }) => ({
 	option: one(pollOptions, {
 		fields: [votes.pollOptionId],
 		references: [pollOptions.id]
+	})
+}));
+
+export const messagesRelations = relations(messages, ({ one }) => ({
+	user: one(users, {
+		fields: [messages.userId],
+		references: [users.id]
+	}),
+	poll: one(polls, {
+		fields: [messages.pollId],
+		references: [polls.id]
 	})
 }));

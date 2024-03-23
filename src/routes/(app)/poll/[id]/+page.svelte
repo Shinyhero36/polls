@@ -6,15 +6,19 @@
 	import type { PageServerData } from './$types';
 	import { toast } from 'svelte-sonner';
 	import Meta from '$lib/components/Meta.svelte';
+	import Chat from '$lib/components/Chat.svelte';
 
 	let {
 		poll,
+		messages,
 		session
 	}: {
 		poll: PageServerData['poll'];
+		messages: PageServerData['messages'];
 		session: PageServerData['session'];
 	} = $state({
 		poll: $page.data.poll,
+		messages: $page.data.messages,
 		session: $page.data.session
 	});
 
@@ -88,17 +92,19 @@
 	</div>
 
 	<div class="poll">
-		<PollOptions bind:endsAt={poll.endsAt} bind:options={poll.options} onVote={handleVote} />
+		<div>
+			<PollOptions bind:endsAt={poll.endsAt} bind:options={poll.options} onVote={handleVote} />
+			<!-- Check if the usear has already voted -->
+			{#if session && hasAlreadyVoted(poll.options, session?.userId)}
+				<p class="already-voted">
+					You voted for <span class="vote">
+						{findForWhatOptionUserVoted(poll.options, session.userId)}
+					</span>
+				</p>
+			{/if}
+		</div>
+		<Chat pollId={poll.id} messages={messages ?? []} />
 	</div>
-
-	<!-- Check if the usear has already voted -->
-	{#if session && hasAlreadyVoted(poll.options, session?.userId)}
-		<p class="already-voted">
-			You voted for <span class="vote">
-				{findForWhatOptionUserVoted(poll.options, session.userId)}
-			</span>
-		</p>
-	{/if}
 {/if}
 
 <style lang="scss">
@@ -141,5 +147,9 @@
 		display: grid;
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 		gap: var(--space-2xl);
+
+		@media screen and (max-width: 768px) {
+			grid-template-columns: 1fr;
+		}
 	}
 </style>

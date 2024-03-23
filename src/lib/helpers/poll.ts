@@ -1,5 +1,5 @@
 import { db } from '$lib/server/db';
-import { pollOptions, polls, votes } from '$lib/server/db/schema';
+import { messages, pollOptions, polls, votes } from '$lib/server/db/schema';
 import { z } from 'zod';
 
 export const getPollWithOptionsAndVotes = async (pollId: string) => {
@@ -100,6 +100,14 @@ export const validatePoll = z.object({
 export const vote = async (optionId: string, userId: string) => {
 	await db.insert(votes).values({
 		pollOptionId: optionId,
+		userId
+	});
+};
+
+export const sendMessage = async (pollId: string, message: string, userId: string) => {
+	await db.insert(messages).values({
+		pollId,
+		message,
 		userId
 	});
 };

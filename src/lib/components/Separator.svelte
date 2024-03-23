@@ -1,16 +1,18 @@
 <script lang="ts">
 	interface Props {
-		children: any;
+		children?: any;
 	}
 	const { children }: Props = $props();
 </script>
 
 <div class="separator">
 	<hr />
-	<div class="text">
-		{@render children()}
-	</div>
-	<hr />
+	{#if children}
+		<div class="text">
+			{@render children()}
+		</div>
+		<hr />
+	{/if}
 </div>
 
 <style>
@@ -21,8 +23,10 @@
 
 		hr {
 			flex-grow: 1;
-			height: 1px;
-			background-color: var(--fg-app-subtle);
+			height: 2px;
+			border: 1px solid var(--border-neutral);
+			color: var(--border-neutral);
+			background-color: var(--border-neutral);
 		}
 
 		.text {
