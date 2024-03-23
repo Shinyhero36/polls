@@ -3,6 +3,7 @@
 	import Button from '$lib/components/ui/Button/Button.svelte';
 	import Input from '$lib/components/ui/Input/Input.svelte';
 	import SpinnerIcon from '$lib/components/icons/SpinnerIcon.svelte';
+	import { toast } from 'svelte-sonner';
 
 	const now = new Date().toISOString().split(':').slice(0, 2).join(':');
 	const oneWeekFromToday = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
@@ -29,6 +30,8 @@
 			isLoading = false;
 			if (result.type === 'failure') {
 				formMessage = result.data as typeof formMessage;
+			} else if (result.type === 'success') {
+				toast.success('Poll created successfully');
 			}
 
 			await update();

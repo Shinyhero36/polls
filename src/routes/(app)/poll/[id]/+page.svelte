@@ -4,6 +4,7 @@
 	import type { PollOption, PollOptionWithVotes } from '$lib/types';
 	import { page } from '$app/stores';
 	import type { PageServerData } from './$types';
+	import { toast } from 'svelte-sonner';
 
 	let {
 		poll,
@@ -16,42 +17,52 @@
 		session: $page.data.session
 	});
 
-	const handleVote = async (option: PollOption) => {
-		if (!poll) return;
-		if (!session) return; // TODO: Should redirect to login page instead
+	const handleVote = (option: PollOption) => {
+		const toastId = toast.loading('Voting...');
 
-		// Make sure the user hasn't already voted
-		if (session && hasAlreadyVoted(poll.options, session.userId)) {
-			console.error('User has already voted');
-			return;
-		}
+		const saveVote = async () => {
+			if (!poll) throw new Error('Poll not found');
+			if (!session) throw new Error('Session not found'); // TODO: Should redirect to login page instead
 
-		// Send vote to the server
-		const form = new FormData();
-		form.append('optionId', option.id);
-		const res = await fetch(`/poll/${poll?.id}?/vote`, {
-			method: 'POST',
-			body: form
-		});
+			// Make sure the user hasn't already voted
+			if (session && hasAlreadyVoted(poll.options, session.userId)) {
+				throw new Error('You have already voted');
+			}
 
-		if (!res.ok) {
-			console.error('Failed to vote');
-			return;
-		}
+			// Send vote to the server
+			const form = new FormData();
+			form.append('optionId', option.id);
+			const res = await fetch(`/poll/${poll?.id}?/vote`, {
+				method: 'POST',
+				body: form
+			});
 
-		// Update the poll with the new vote count
-		poll = {
-			...poll,
-			options: poll.options.map((o) => {
-				if (o.id === option.id && session) {
-					return {
-						...o,
-						votes: [...o.votes, { userId: session.userId, pollOptionId: option.id }]
-					};
-				}
-				return o;
-			})
+			if (!res.ok) {
+				throw new Error('Failed to vote');
+			}
+
+			// Update the poll with the new vote count
+			poll = {
+				...poll,
+				options: poll.options.map((o) => {
+					if (o.id === option.id && session) {
+						return {
+							...o,
+							votes: [...o.votes, { userId: session.userId, pollOptionId: option.id }]
+						};
+					}
+					return o;
+				})
+			};
 		};
+
+		saveVote()
+			.then(() => {
+				toast.success('Voted successfully', { id: toastId });
+			})
+			.catch((err) => {
+				toast.error(err.message, { id: toastId });
+			});
 	};
 
 	const hasAlreadyVoted = (options: PollOptionWithVotes[], userId: string) => {
