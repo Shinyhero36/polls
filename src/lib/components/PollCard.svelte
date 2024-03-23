@@ -13,7 +13,10 @@
 
 <div class="poll-card" aria-label="{poll.question} by {poll.user.username}">
 	<div class="author">
-		<img src="https://github.com/Shinyhero36.png" alt="S" />
+		<img
+			src="https://cdn.discordapp.com/avatars/{poll.user.id}/{poll.user.avatar}.png"
+			alt="{poll.user.username}'s discord avatar"
+		/>
 		<span>{poll.user.username}</span>
 	</div>
 	<h3>{poll.question}</h3>

@@ -27,6 +27,7 @@ export const getOngoingPollsWithVotesAndCreatorInfo = async () => {
 			},
 			user: {
 				columns: {
+					id: true,
 					username: true,
 					avatar: true
 				}
@@ -47,6 +48,7 @@ export const getFinishedPollsWithVotesAndCreatorInfo = async () => {
 			},
 			user: {
 				columns: {
+					id: true,
 					username: true,
 					avatar: true
 				}

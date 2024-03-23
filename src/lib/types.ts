@@ -15,6 +15,6 @@ export type PollOptionWithVotes = PollOption & {
 };
 
 export type Poll = typeof polls.$inferSelect & {
-	user: Pick<User, 'avatar' | 'username'>;
+	user: Pick<User, 'id' | 'avatar' | 'username'>;
 	options: PollOption[];
 };
