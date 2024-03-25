@@ -63,6 +63,7 @@
 			font-size: inherit;
 			height: 40px;
 			background-color: var(--neutral-3);
+			color: var(--neutral-11);
 
 			&::placeholder {
 				color: var(--fg-app-subtle);
