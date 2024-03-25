@@ -32,7 +32,8 @@ export const getOngoingPollsWithVotesAndCreatorInfo = async () => {
 					avatar: true
 				}
 			}
-		}
+		},
+		orderBy: ({ createdAt }, { desc }) => desc(createdAt)
 	});
 };
 
@@ -53,7 +54,8 @@ export const getFinishedPollsWithVotesAndCreatorInfo = async () => {
 					avatar: true
 				}
 			}
-		}
+		},
+		orderBy: ({ createdAt }, { desc }) => desc(createdAt)
 	});
 };
 
