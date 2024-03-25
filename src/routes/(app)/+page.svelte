@@ -35,7 +35,7 @@
 	<h3>Past polls</h3>
 	{#if finished.length === 0}
 		<EmptyState message="No polls" extra="Create a poll to get started">
-			<Button href="/create" variant="primary">Create a poll</Button>
+			<Button href="/new-poll" variant="primary">Create a poll</Button>
 		</EmptyState>
 	{:else}
 		<div class="polls-grid">
