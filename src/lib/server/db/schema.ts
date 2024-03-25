@@ -29,7 +29,7 @@ export const polls = pgTable('polls', {
 		length: 100
 	}).notNull(),
 	description: varchar('description', {
-		length: 500
+		length: 100
 	}),
 	userId: text('user_id')
 		.references(() => users.id, { onDelete: 'cascade' })
