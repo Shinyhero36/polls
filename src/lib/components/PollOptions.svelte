@@ -96,6 +96,10 @@
 
 					transition: width 400ms ease-in-out;
 				}
+
+				> span {
+					color: var(--fg-app-subtle);
+				}
 			}
 
 			// Change bar style when '.poll-option' is hovered
