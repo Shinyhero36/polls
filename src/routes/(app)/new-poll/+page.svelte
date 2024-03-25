@@ -4,13 +4,22 @@
 	import Input from '$lib/components/ui/Input/Input.svelte';
 	import SpinnerIcon from '$lib/components/Icons/SpinnerIcon.svelte';
 	import { toast } from 'svelte-sonner';
+	import Select from '$lib/components/ui/Select/Select.svelte';
 
-	const now = new Date().toISOString().split(':').slice(0, 2).join(':');
-	const oneWeekFromToday = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
-		.toISOString()
-		.split(':')
-		.slice(0, 2)
-		.join(':');
+	const ONE_HOUR = 3600 * 1000;
+
+	const now = new Date();
+	const in1H = new Date(now.getTime() + ONE_HOUR).toISOString();
+	const in2H = new Date(now.getTime() + ONE_HOUR * 2).toISOString();
+	const in5H = new Date(now.getTime() + ONE_HOUR * 5).toISOString();
+	const in12H = new Date(now.getTime() + ONE_HOUR * 12).toISOString();
+	const in1D = new Date(now.getTime() + ONE_HOUR * 24).toISOString();
+	const in2D = new Date(now.getTime() + ONE_HOUR * 48).toISOString();
+	const in3D = new Date(now.getTime() + ONE_HOUR * 72).toISOString();
+	const in4D = new Date(now.getTime() + ONE_HOUR * 96).toISOString();
+	const in5D = new Date(now.getTime() + ONE_HOUR * 120).toISOString();
+	const in6D = new Date(now.getTime() + ONE_HOUR * 144).toISOString();
+	const in7D = new Date(now.getTime() + ONE_HOUR * 168).toISOString();
 
 	let formMessage = $state({
 		question: '',
@@ -65,24 +74,33 @@
 				required={i < 2}
 				type="text"
 				name="options"
-				placeholder="option {i + 1}"
+				placeholder="option {i + 1}{i > 1 ? ' (optional)' : ''}"
 				label={i === 0 ? 'Vote options' : ''}
 				error={formMessage.options[i]}
 			/>
 		{/each}
 	</div>
 
-	<Input
+	<!-- TODO: SHould be based on submit date -->
+	<Select
 		required
-		type="datetime-local"
 		name="ends_at"
 		id="ends_at"
 		label="End date"
 		placeholder="When does the poll end ?"
-		min={now}
-		max={oneWeekFromToday}
-		hint="Poll max duration is 7 days"
-	/>
+	>
+		<option value={in1H}>In 1 hour</option>
+		<option value={in2H}>In 2 hours</option>
+		<option value={in5H}>In 5 hours</option>
+		<option value={in12H}>In 12 hours</option>
+		<option value={in1D}>In 24 hours</option>
+		<option value={in2D}>In 2 days</option>
+		<option value={in3D}>In 3 days</option>
+		<option value={in4D}>In 4 days</option>
+		<option value={in5D}>In 5 days</option>
+		<option value={in6D}>In 6 days</option>
+		<option value={in7D}>In 7 days</option>
+	</Select>
 
 	<div class="actions">
 		<Button type="submit" inline disabled={isLoading}>
