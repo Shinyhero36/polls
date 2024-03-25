@@ -93,9 +93,9 @@ export const createPoll = async ({
 };
 
 export const validatePoll = z.object({
-	question: z.string().min(1).max(255),
-	description: z.string().max(500).optional(),
-	options: z.array(z.string().min(1).max(255)).min(2).max(5),
+	question: z.string().trim().min(1).max(255),
+	description: z.string().trim().max(500).optional(),
+	options: z.array(z.string().trim().min(1).max(255)).min(2).max(5),
 	ends_at: z.coerce.date().refine((date) => new Date(date))
 });
 
