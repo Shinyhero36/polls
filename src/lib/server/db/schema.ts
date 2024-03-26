@@ -79,7 +79,7 @@ export const messages = pgTable('messages', {
 		.references(() => polls.id, { onDelete: 'cascade' })
 		.notNull(),
 	message: varchar('message', {
-		length: 500
+		length: 150
 	}).notNull(),
 	createdAt: timestamp('created_at').notNull().defaultNow()
 });

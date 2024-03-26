@@ -55,6 +55,7 @@
 		label="Question"
 		placeholder="Is this a poll ?"
 		error={formMessage.question}
+		maxlength={100}
 	/>
 
 	<Input
@@ -66,6 +67,7 @@
 		hint="Optional"
 		error={formMessage.description}
 		textarea
+		maxlength={100}
 	/>
 
 	<div class="options">
@@ -77,6 +79,7 @@
 				placeholder="option {i + 1}{i > 1 ? ' (optional)' : ''}"
 				label={i === 0 ? 'Vote options' : ''}
 				error={formMessage.options[i]}
+				maxlength={100}
 			/>
 		{/each}
 	</div>

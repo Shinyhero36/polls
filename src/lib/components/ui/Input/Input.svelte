@@ -12,6 +12,8 @@
 		min?: any;
 		max?: any;
 		textarea?: boolean;
+		minlength?: number;
+		maxlength?: number;
 	}
 
 	let {
@@ -26,7 +28,9 @@
 		error,
 		min,
 		max,
-		textarea = false
+		textarea = false,
+		minlength,
+		maxlength
 	}: Props = $props();
 </script>
 
@@ -35,9 +39,20 @@
 		<label for={id}>{label}</label>
 	{/if}
 	{#if !textarea}
-		<input {type} {id} {name} {placeholder} {required} bind:value {min} {max} />
+		<input
+			{type}
+			{id}
+			{name}
+			{placeholder}
+			{required}
+			bind:value
+			{min}
+			{max}
+			{minlength}
+			{maxlength}
+		/>
 	{:else}
-		<textarea {id} {name} {placeholder} {required} bind:value />
+		<textarea {id} {name} {placeholder} {required} bind:value {minlength} {maxlength} />
 	{/if}
 	{#if hint && !error}
 		<p class="hint">{hint}</p>
