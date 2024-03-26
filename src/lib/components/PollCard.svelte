@@ -53,6 +53,10 @@
 			background-color: var(--bg-surface-brand-hover);
 			border: 2px solid var(--border-brand-strong);
 		}
+
+		h3 {
+			word-break: break-all;
+		}
 	}
 
 	.author {
