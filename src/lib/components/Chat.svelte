@@ -35,11 +35,13 @@
 	<style lang="scss">
 		.poll-message {
 			display: flex;
-			align-items: center;
+			align-items: flex-start;
 			gap: var(--space-md);
 
 			padding: var(--space-md);
 			border-radius: var(--rounded-lg);
+
+			word-break: break-all;
 
 			&:hover {
 				background-color: var(--bg-surface);
