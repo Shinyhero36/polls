@@ -11,7 +11,7 @@
 	const { poll, totalOfVotes }: Props = $props();
 </script>
 
-<div class="poll-card" aria-label="{poll.question} by {poll.user.username}">
+<div class="poll-card" aria-label="{poll.question} by {poll.user.username}" title={poll.question}>
 	<div class="author">
 		<img
 			src="https://cdn.discordapp.com/avatars/{poll.user.id}/{poll.user.avatar}.png"
@@ -46,6 +46,8 @@
 		border-radius: var(--rounded-xl);
 		background-color: var(--bg-surface);
 		border: 2px solid var(--border-neutral-subtle);
+
+		height: 100%;
 
 		user-select: none;
 
@@ -86,6 +88,7 @@
 	}
 
 	footer {
+		margin-top: auto;
 		display: flex;
 		align-items: center;
 		gap: var(--space-2xl);
