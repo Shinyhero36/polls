@@ -115,6 +115,7 @@
 	h1 {
 		margin-top: var(--space-6xl);
 		font-size: var(--font-size-4xl);
+		word-break: break-all;
 	}
 
 	p {
@@ -122,6 +123,7 @@
 		font-size: var(--font-size-lg);
 		line-height: var(--line-height-lg);
 		color: var(--fg-app-subtle);
+		word-break: break-all;
 	}
 
 	.already-voted {

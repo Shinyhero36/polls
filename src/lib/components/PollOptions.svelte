@@ -63,6 +63,7 @@
 				font-weight: 500;
 				color: var(--fg-app-subtle);
 				width: calc(var(--width-xxs) / 2);
+				word-wrap: break-word;
 			}
 
 			&.isOver.maxVotes {
