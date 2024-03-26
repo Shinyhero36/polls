@@ -87,9 +87,9 @@
 <Meta title={poll?.question} description={poll?.description} />
 
 {#if poll}
-	<h1>{poll.question}</h1>
+	<h1 class="poll-title">{poll.question}</h1>
 	{#if poll.description}
-		<p>{poll.description}</p>
+		<p class="poll-description">{poll.description}</p>
 	{/if}
 	<div class="time-info">
 		<Countdown until={poll.endsAt} />
@@ -112,18 +112,26 @@
 {/if}
 
 <style lang="scss">
-	h1 {
+	.poll-title {
 		margin-top: var(--space-6xl);
 		font-size: var(--font-size-4xl);
 		word-break: break-all;
 	}
 
-	p {
+	.poll-description {
 		margin-top: var(--space-md);
 		font-size: var(--font-size-lg);
 		line-height: var(--line-height-lg);
 		color: var(--fg-app-subtle);
 		word-break: break-all;
+	}
+
+	.poll-title,
+	.poll-description {
+		overflow: hidden;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
 	}
 
 	.already-voted {

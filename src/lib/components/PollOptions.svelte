@@ -27,12 +27,13 @@
 <div class="poll-options">
 	{#each options as option}
 		<button
+			title={option.option}
 			class="poll-option"
 			class:isOver
 			class:maxVotes={maxVotes === option.votes.length}
 			on:click={() => handlePollOptionClick(option)}
 		>
-			<p>
+			<p class="option-text">
 				{option.option}
 			</p>
 			<div class="poll-stat">
@@ -64,6 +65,13 @@
 				color: var(--fg-app-subtle);
 				width: calc(var(--width-xxs) / 2);
 				word-wrap: break-word;
+			}
+
+			.option-text {
+				overflow: hidden;
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 3;
 			}
 
 			&.isOver.maxVotes {
